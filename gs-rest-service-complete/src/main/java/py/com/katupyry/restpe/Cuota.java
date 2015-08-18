@@ -1,4 +1,4 @@
-package hello;
+package py.com.katupyry.restpe;
 
 public class Cuota {
 
