@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>gs-rest-service-complete</name>
+	<name>RestPE</name>
 	<comment></comment>
 	<projects>
+		<project>KyBD</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
