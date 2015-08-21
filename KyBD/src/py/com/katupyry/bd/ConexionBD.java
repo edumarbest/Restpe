@@ -2,13 +2,22 @@ package py.com.katupyry.bd;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Hashtable;
-public class ConexionBD implements ConectableBD{
+
+import py.com.katupyry.errores.KyErrorsKeys;
+import py.com.katupyry.errores.KyMensajesError;
+public class ConexionBD implements ConectableBD, KyErrorsKeys{
 	
 	private Connection conn;
 	private Hashtable<String, String> params;
 	private Hashtable<String, String> drivers;
+	private final String PARAM_URL = "URL";
+	private final String PARAM_BD = "BD";
+	private final String PARAM_USUARIO = "usuario";
+	private final String PARAM_PASSWORD = "password";
 	
 	public ConexionBD(){
 		drivers.put("oracle", "oracle.jdbc.driver.OracleDriver");
@@ -27,7 +36,7 @@ public class ConexionBD implements ConectableBD{
 
 	public Connection getConexion() throws BDException{
 		if(conn == null){
-			throw new BDException("No hay conexion");
+			throw new BDException(KyMensajesError.mensajeFormateado(MSG_CONN_NULL));
 		}else{
 			return conn;
 		}
@@ -42,21 +51,21 @@ public class ConexionBD implements ConectableBD{
 	@Override
 	public void conectar() throws ParametrosException, BDException {
 		if(params == null){
-			throw new ParametrosException("Parametros nulos");
+			throw new ParametrosException(KyMensajesError.mensajeFormateado(MSG_PARAMS_NULLS));
 		}
-		if(params.get("URL") == null){
-			throw new ParametrosException("Parametro URL nulo");
+		if(params.get(PARAM_URL) == null){
+			throw new ParametrosException(KyMensajesError.mensajeFormateado(MSG_PARAM_NULL,PARAM_URL));
 		}
-		if(params.get("BD") == null){
-			throw new ParametrosException("Parametro BD nulo");
+		if(params.get(PARAM_BD) == null){
+			throw new ParametrosException(KyMensajesError.mensajeFormateado(MSG_PARAM_NULL,PARAM_BD));
 		}
 		
-		if(params.get("usuario") == null){
-			throw new ParametrosException("Parametro usuario nulo");
+		if(params.get(PARAM_USUARIO) == null){
+			throw new ParametrosException(KyMensajesError.mensajeFormateado(MSG_PARAM_NULL,PARAM_USUARIO));
 		}
 
-		if(params.get("password") == null){
-			throw new ParametrosException("Parametro password nulo");
+		if(params.get(PARAM_PASSWORD) == null){
+			throw new ParametrosException(KyMensajesError.mensajeFormateado(MSG_PARAM_NULL,PARAM_PASSWORD));
 		}
 
 		if(drivers.get(params.get("BD")) == null){
@@ -69,11 +78,9 @@ public class ConexionBD implements ConectableBD{
 			throw new BDException("Error al cargar la clase: " + e.getMessage());
 		}
 
-		Connection connection = null;
-
 		try {
 
-			connection = DriverManager.getConnection(params.get("URL"),params.get("usuario"),params.get("password"));
+			conn = DriverManager.getConnection(params.get("URL"),params.get("usuario"),params.get("password"));
 				//	"jdbc:oracle:thin:@localhost:1521:mkyong", "username",
 				//	"password");
 
@@ -81,10 +88,30 @@ public class ConexionBD implements ConectableBD{
 			throw new BDException("Error al obtener conexion: " + e.getMessage());
 		}
 
-		if (connection == null) {
+		try {
+
+			conn = DriverManager.getConnection(params.get("URL"),params.get("usuario"),params.get("password"));
+				//	"jdbc:oracle:thin:@localhost:1521:mkyong", "username",
+				//	"password");
+
+		} catch (SQLException e) {
+			throw new BDException(KyMensajesError.mensajeFormateado(MSG_OBT_CONN, e.getMessage()));
+		}
+
+		if (conn == null) {
 			throw new ParametrosException("Conexion nula");
 		}		
 		
+	}
+	
+	public ResultSet getConsulta(String sql) throws SQLException{
+		Statement stmt = null;
+	    try {
+	        stmt = conn.createStatement();
+	        return stmt.executeQuery(sql);
+	    } finally {
+	        if (stmt != null) { stmt.close(); }
+	    }
 	}
 
 }

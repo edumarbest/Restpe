@@ -8,7 +8,9 @@ public class KyErrors  extends ListResourceBundle implements KyErrorsKeys {
 	}
 	  
 	static final Object[][] contents = {
-			{MSG_FILE_NOT_FOUND, "Cannot find file {1}"},
-			{MSG_CANT_OPEN_FILE, "Cannot open file {1}"},
+			{MSG_OBT_CONN, "Error al obtener conexion: {1}"},
+			{MSG_CONN_NULL, "No hay conexion"},
+			{MSG_PARAM_NULL, "Parametro {1} nulo"},
+			{MSG_PARAMS_NULLS, "Parametros nulos"},
 	};
 }

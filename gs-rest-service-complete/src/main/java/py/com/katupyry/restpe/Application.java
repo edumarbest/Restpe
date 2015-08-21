@@ -7,11 +7,11 @@ import py.com.katupyry.errores.KyErrorsKeys;
 import py.com.katupyry.errores.KyMensajesError;
 
 @SpringBootApplication
-public class Application  implements KyErrorsKeys{
+public class Application implements KyErrorsKeys{
 
     public static void main(String[] args) {
     	
-    	System.out.println(KyMensajesError.mensajeFormateado(MSG_FILE_NOT_FOUND, "error"));
+    	System.out.println(KyMensajesError.mensajeFormateado(MSG_OBT_CONN, "error"));
     	
         SpringApplication.run(Application.class, args);
     }
