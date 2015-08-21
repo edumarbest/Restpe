@@ -12,5 +12,9 @@ public class KyErrors  extends ListResourceBundle implements KyErrorsKeys {
 			{MSG_CONN_NULL, "No hay conexion"},
 			{MSG_PARAM_NULL, "Parametro {1} nulo"},
 			{MSG_PARAMS_NULLS, "Parametros nulos"},
+			{MSG_NO_DRIVER, "No existe driver para BD {1}"},
+			{MSG_CARGAR_CLASE, "Error al cargar la clase {1} "},
+			{MSG_ERROR_QUERY, "Error al ejecutar consulta: {1}"},
+			{MSG_ERROR_INESPERADO, "Error inesperado"},
 	};
 }

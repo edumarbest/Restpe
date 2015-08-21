@@ -69,13 +69,13 @@ public class ConexionBD implements ConectableBD, KyErrorsKeys{
 		}
 
 		if(drivers.get(params.get("BD")) == null){
-			throw new ParametrosException("No existe driver para BD [" + params.get("BD") + "]");
+			throw new ParametrosException(KyMensajesError.mensajeFormateado(MSG_NO_DRIVER,params.get("BD")));
 		}
 		
 		try {
 			Class.forName(drivers.get(params.get("BD")));
 		} catch (ClassNotFoundException e) {
-			throw new BDException("Error al cargar la clase: " + e.getMessage());
+			throw new BDException(KyMensajesError.mensajeFormateado(MSG_CARGAR_CLASE,e.getMessage()));
 		}
 
 		try {
@@ -85,7 +85,7 @@ public class ConexionBD implements ConectableBD, KyErrorsKeys{
 				//	"password");
 
 		} catch (SQLException e) {
-			throw new BDException("Error al obtener conexion: " + e.getMessage());
+			throw new BDException(KyMensajesError.mensajeFormateado(MSG_OBT_CONN,e.getMessage()));
 		}
 
 		try {
@@ -99,7 +99,7 @@ public class ConexionBD implements ConectableBD, KyErrorsKeys{
 		}
 
 		if (conn == null) {
-			throw new ParametrosException("Conexion nula");
+			throw new BDException(KyMensajesError.mensajeFormateado(MSG_CONN_NULL));
 		}		
 		
 	}

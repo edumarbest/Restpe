@@ -1,5 +1,6 @@
 package py.com.katupyry.restpe;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable;
@@ -25,30 +26,31 @@ public class CuotaController implements KyErrorsKeys{
 		try {
 			conn.conectar();
 		} catch (ParametrosException | BDException e) {
-			throw new BDException(KyMensajesError.mensajeFormateado(MSG_FILE_NOT_FOUND, "hola"));
+			throw new BDException(KyMensajesError.mensajeFormateado(MSG_OBT_CONN));
 		}
 	}
 
     @RequestMapping("/consulta")
     public RespuestaCuotas consulta(@RequestParam(value="name", defaultValue="World") String name) {
     	RespuestaCuotas resp = new RespuestaCuotas();
+    	
+    	String sql = "";
     	try {
-			Statement stmt = conn.getConexion().createStatement();
-		} catch (SQLException | BDException e) {
-			// TODO Auto-generated catch block
+			ResultSet rs = conn.getConsulta(sql);
+		} catch (SQLException e) {
 			e.printStackTrace();
 			resp.setCodigo(99);
-			resp.setDescripcion(KyMensajesError.mensajeFormateado(MSG_FILE_NOT_FOUND, "hola"));
+			resp.setDescripcion(KyMensajesError.mensajeFormateado(MSG_ERROR_QUERY, sql));
 		}finally {
-	        return new RespuestaCuotas(99, "Error inesperado");
+	        return new RespuestaCuotas(99, KyMensajesError.mensajeFormateado(MSG_ERROR_INESPERADO));
 		}
     }
     @RequestMapping("/pago")
     public Respuesta pago(@RequestParam(value="name", defaultValue="World") String name) {
-        return new Respuesta(99, "Error inesperado");
+        return new Respuesta(99, KyMensajesError.mensajeFormateado(MSG_ERROR_INESPERADO));
     }
     @RequestMapping("/reversa")
     public Respuesta reversa(@RequestParam(value="name", defaultValue="World") String name) {
-        return new Respuesta(99, "Error inesperado");
+        return new Respuesta(99, KyMensajesError.mensajeFormateado(MSG_ERROR_INESPERADO));
     }
 }
