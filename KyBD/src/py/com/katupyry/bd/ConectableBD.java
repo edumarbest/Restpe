@@ -15,4 +15,5 @@ public interface ConectableBD {
 	public abstract void conectar() throws ParametrosException, BDException;
 	
 	public abstract ResultSet getConsulta(String sql) throws SQLException;
+
 }

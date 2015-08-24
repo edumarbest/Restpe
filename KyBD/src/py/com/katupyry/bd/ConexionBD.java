@@ -1,5 +1,6 @@
 package py.com.katupyry.bd;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -113,5 +114,5 @@ public class ConexionBD implements ConectableBD, KyErrorsKeys{
 	        if (stmt != null) { stmt.close(); }
 	    }
 	}
-
+	
 }

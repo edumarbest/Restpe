@@ -23,7 +23,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/KyBD"/>
-	<classpathentry kind="lib" path="C:/Docs/libs/KyBD.jar"/>
-	<classpathentry kind="lib" path="C:/Docs/libs/KyErrores.jar"/>
+	<classpathentry kind="lib" path="/home/eduardo/libs/KyBD.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
